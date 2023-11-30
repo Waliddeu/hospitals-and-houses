@@ -1,4 +1,7 @@
+import seaborn as sns
+import pandas as pd
 import random
+import numpy as np
 
 
 class Space():
@@ -190,7 +193,40 @@ class Space():
         img.save(filename)
 
 
-# Create a new space and add houses randomly
+    def heatmap_data(self, hospitals, log=True):
+        """Construct the data / get cost values for each cell"""
+
+        # Consider all possible cells
+        candidates = set(
+            (row, col)
+            for row in range(self.height)
+            for col in range(self.width)
+        )
+
+        candidate_cost = np.zeros(shape=(self.height, self.width))
+
+        # Remove all houses and hospitals
+        for house in self.houses:
+            candidates.remove(house)
+        for hospital in self.hospitals:
+            candidates.remove(hospital)
+
+        for candidate in candidates:
+            candidate_cost[candidate[0]][candidate[1]] = self.get_cost(set([candidate]))
+            
+            # Print the cost_candidate matrix
+            cost_candidate = print(cost_candidate)
+
+
+        return candidate_cost
+
+      
+
+        # Assuming `hospitals` is a list of hospital locations
+
+            # Print the cost_candidate matrix
+
+        # Create a new space and add houses randomly
 s = Space(height=10, width=20, num_hospitals=3)
 for i in range(15):
     s.add_house(random.randrange(s.height), random.randrange(s.width))
