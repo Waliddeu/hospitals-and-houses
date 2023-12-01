@@ -1,7 +1,7 @@
 import seaborn as sns
 import random
 import numpy as np
-from matplotlib import pyplot as plt
+import matplotlib.pyplot as plt
 
 class Space():
 
@@ -46,7 +46,7 @@ class Space():
             print("Initial state: cost", self.get_cost(self.hospitals))
         if image_prefix:
             self.output_image(f"{image_prefix}{str(count).zfill(3)}.png")
-
+            self.heatmap_picture()
         # Continue until we reach maximum number of iterations
         while maximum is None or count < maximum:
             count += 1
@@ -215,9 +215,18 @@ class Space():
             
         return candidate_cost
 
-    def Heatmap_picture(self):
+    def heatmap_picture(self):
         """Storing data / Cost values"""
         data = self.heatmap_data_collection(self.hospitals)
+        # Create the Heatmap using Seaborn library
+        fig, ax = plt.subplots(figsize=(20,9))
+        ax = sns.heatmap(data, annot=True, cmap= "coolwarm", fmt='.1f', linewidth=.5, cbar=True, square=True)
+
+        # Saving the Heatmap picture 
+        Heatmap_pic = 'Heatmap.png'
+        plt.savefig(Heatmap_pic)
+
+        # plt.show()
 
 
 
@@ -228,13 +237,4 @@ for i in range(15):
 
 # Use local search to determine hospital placement
 hospitals = s.hill_climb(image_prefix="hospitals", log=True)
-data = s.heatmap_data_collection(hospitals)
-
-# Create the Heatmap using Seaborn library
-ax = sns.heatmap(data, annot=True, cmap= "crest", fmt='.1f', linewidth=.5, cbar=True, square=True)
-
-# Saving the Heatmap picture 
-Heatmap_pic = 'Heatmap.png'
-plt.savefig(Heatmap_pic, dpi=800)
-
-plt.show()
+# data = s.heatmap_data_collection(hospitals)
