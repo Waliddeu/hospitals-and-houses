@@ -1,8 +1,7 @@
 import seaborn as sns
-import pandas as pd
 import random
 import numpy as np
-
+from matplotlib import pyplot as plt
 
 class Space():
 
@@ -193,7 +192,7 @@ class Space():
         img.save(filename)
 
 
-    def heatmap_data(self, hospitals, log=True):
+    def heatmap_data_collection(self, hospitals):
         """Construct the data / get cost values for each cell"""
 
         # Consider all possible cells
@@ -208,28 +207,28 @@ class Space():
         # Remove all houses and hospitals
         for house in self.houses:
             candidates.remove(house)
-        for hospital in self.hospitals:
-            candidates.remove(hospital)
+        # for hospital in self.hospitals:
+        #     candidates.remove(hospital)
 
         for candidate in candidates:
             candidate_cost[candidate[0]][candidate[1]] = self.get_cost(set([candidate]))
             
-            # Print the cost_candidate matrix
-            cost_candidate = print(cost_candidate)
-
-
         return candidate_cost
 
-      
+    def Heatmap_picture(self):
+        data = self.heatmap_data_collection(self.hospitals)
 
-        # Assuming `hospitals` is a list of hospital locations
 
-            # Print the cost_candidate matrix
 
-        # Create a new space and add houses randomly
+# Create a new space and add houses randomly
 s = Space(height=10, width=20, num_hospitals=3)
 for i in range(15):
     s.add_house(random.randrange(s.height), random.randrange(s.width))
 
 # Use local search to determine hospital placement
 hospitals = s.hill_climb(image_prefix="hospitals", log=True)
+data = s.heatmap_data_collection(hospitals)
+
+ax = sns.heatmap(data, annot=True, cmap= "crest", fmt=".1f", linewidth=.5)
+
+plt.show()
