@@ -207,8 +207,8 @@ class Space():
         # Remove all houses and hospitals
         for house in self.houses:
             candidates.remove(house)
-        # for hospital in self.hospitals:
-        #     candidates.remove(hospital)
+        for hospital in self.hospitals:
+            candidates.remove(hospital)
 
         for candidate in candidates:
             candidate_cost[candidate[0]][candidate[1]] = self.get_cost(set([candidate]))
@@ -216,12 +216,13 @@ class Space():
         return candidate_cost
 
     def Heatmap_picture(self):
+        """Storing data / Cost values"""
         data = self.heatmap_data_collection(self.hospitals)
 
 
 
 # Create a new space and add houses randomly
-s = Space(height=10, width=20, num_hospitals=3)
+s = Space(height=10, width=20, num_hospitals=1)
 for i in range(15):
     s.add_house(random.randrange(s.height), random.randrange(s.width))
 
@@ -229,6 +230,11 @@ for i in range(15):
 hospitals = s.hill_climb(image_prefix="hospitals", log=True)
 data = s.heatmap_data_collection(hospitals)
 
-ax = sns.heatmap(data, annot=True, cmap= "crest", fmt=".1f", linewidth=.5)
+# Create the Heatmap using Seaborn library
+ax = sns.heatmap(data, annot=True, cmap= "crest", fmt='.1f', linewidth=.5, cbar=True, square=True)
+
+# Saving the Heatmap picture 
+Heatmap_pic = 'Heatmap.png'
+plt.savefig(Heatmap_pic)
 
 plt.show()
