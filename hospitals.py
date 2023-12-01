@@ -235,6 +235,6 @@ ax = sns.heatmap(data, annot=True, cmap= "crest", fmt='.1f', linewidth=.5, cbar=
 
 # Saving the Heatmap picture 
 Heatmap_pic = 'Heatmap.png'
-plt.savefig(Heatmap_pic)
+plt.savefig(Heatmap_pic, dpi=800)
 
 plt.show()
